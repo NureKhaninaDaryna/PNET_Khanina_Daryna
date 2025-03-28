@@ -1,0 +1,119 @@
+﻿<UserControl x:Class="UI.Views.DeliveryFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:UI.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="1000" d:DesignWidth="300">
+    <Grid>
+        <Border>
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Authenticator.IsLoggedIn}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <StackPanel Orientation="Vertical" Margin="20">
+                <TextBlock Text="You are not log in!" Style="{StaticResource LoginTextBlock}"/>
+            </StackPanel>
+        </Border>
+        <Border Margin="0,20" Width="700" Height="750">
+            <Border.Style>
+                <Style TargetType="Border" BasedOn="{StaticResource BorderStyle}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Authenticator.IsLoggedIn}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Authenticator.IsLoggedIn}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <StackPanel Orientation="Vertical"
+                        Margin="20">
+                <TextBlock Text="Send the delivery info for courier" 
+                           Style="{StaticResource LoginTextBlock}"/>
+                <Grid VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Recipient" 
+                               Style="{StaticResource DefaultTextBlock}"/>
+                    <ComboBox Style="{StaticResource ComboBoxFlatStyle}" 
+                              Grid.Row="1"
+                              Width="400"
+                              ItemsSource="{Binding RecipientEmails}" 
+                              SelectedItem="{Binding SelectedRecipientEmail}" />
+                    
+                    <TextBlock Grid.Row="2"
+                               Text="Courier" 
+                               Style="{StaticResource DefaultTextBlock}"/>
+                    <ComboBox Style="{StaticResource ComboBoxFlatStyle}" 
+                              Grid.Row="3"
+                              Width="400"
+                              ItemsSource="{Binding CourierEmails}" 
+                              SelectedItem="{Binding SelectedCourierEmail}" />
+                    
+                    <TextBlock Grid.Row="4"
+                               Text="Start Address" 
+                               Style="{StaticResource DefaultTextBlock}"/>
+                    <TextBox Grid.Row="5"
+                             Width="400"
+                             Text="{Binding StartAddress, UpdateSourceTrigger=PropertyChanged}"        
+                             Style="{StaticResource LoginTextBox}"/>
+
+                    <TextBlock Grid.Row="6"
+                               Text="Delivery Address" 
+                               Style="{StaticResource DefaultTextBlock}"/>
+                    <TextBox Grid.Row="7"
+                             Width="400"
+                             Text="{Binding DeliveryAddress, UpdateSourceTrigger=PropertyChanged}"        
+                             Style="{StaticResource LoginTextBox}"/>
+                </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Existing Tracking Numbers" 
+                               Style="{StaticResource DefaultTextBlock}"/>
+                    <TextBox Grid.Row="1" Text="{Binding AllTrackingNumbersText, Mode=OneWay}" 
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto"
+                             IsReadOnly="True"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             Height="100"/>
+                </Grid>
+                <StackPanel Orientation="Horizontal" Margin="10 20 0 10">
+                    <TextBlock Text="Packages:" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding PackagesCount}" FontWeight="Bold" Margin="5,0,0,0"
+                               VerticalAlignment="Center"/>
+                    <Button Content="+" Width="30" Height="30" 
+                            FontSize="18" 
+                            Padding="5"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Command="{Binding OpenAddPackageWindowCommand}" 
+                            Margin="10,5,0,5"/>
+                </StackPanel>
+                <Button Style="{StaticResource ButtonStyle}"
+                        Command="{Binding AddUserDeliveryInfoCommand}"
+                        Content="Create"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,56 @@
+CREATE DATABASE DeliveryServiceDB;
+
+GO
+USE DeliveryServiceDB;
+GO
+
+CREATE TABLE ProfileImages (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    FileName NVARCHAR(255) NOT NULL,
+    ImageData VARBINARY(MAX) NOT NULL
+);
+
+CREATE TABLE Users (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Email NVARCHAR(255) UNIQUE NOT NULL,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    Role INT NOT NULL,
+    AvatarId INT NULL,
+    DayOfBirth DATE NULL,
+    FirstName NVARCHAR(100) NOT NULL,
+    LastName NVARCHAR(100) NOT NULL,
+    PhoneNumber NVARCHAR(20) NOT NULL UNIQUE,
+    Rating FLOAT DEFAULT 0 CHECK (Rating BETWEEN 0 AND 5),
+    UserName NVARCHAR(100) UNIQUE NOT NULL,
+    FOREIGN KEY (AvatarId) REFERENCES ProfileImages(Id) ON DELETE SET NULL
+);
+
+CREATE TABLE DeliveryInfo (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    CourierId INT NOT NULL,
+    RecipientId INT NOT NULL,
+    DeliveryAddress NVARCHAR(255) NOT NULL,
+    StartAddress NVARCHAR(255) NOT NULL,
+    FOREIGN KEY (CourierId) REFERENCES Users(Id) ON DELETE CASCADE,
+    FOREIGN KEY (RecipientId) REFERENCES Users(Id) ON DELETE NO ACTION
+);
+
+CREATE TABLE DeliveryStatusHistory (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    DeliveryInfoId INT NOT NULL,
+    Status INT NOT NULL,
+    ChangeDate DATETIME DEFAULT GETDATE(),
+	AddressInProgress NVARCHAR(255) NULL,
+    FOREIGN KEY (DeliveryInfoId) REFERENCES DeliveryInfo(Id) ON DELETE CASCADE
+);
+
+CREATE TABLE Packages (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    DeliveryInfoId INT NOT NULL,
+    Weight FLOAT NOT NULL CHECK (Weight > 0),
+    Dimensions NVARCHAR(50) DEFAULT '10/10',
+    Content NVARCHAR(255) NOT NULL,
+    Fragile BIT NOT NULL DEFAULT 0,
+    Price DECIMAL(10,2) NOT NULL CHECK (Price >= 0),
+    FOREIGN KEY (DeliveryInfoId) REFERENCES DeliveryInfo(Id) ON DELETE CASCADE
+);

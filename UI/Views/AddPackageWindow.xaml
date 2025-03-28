@@ -1,0 +1,24 @@
+﻿<Window x:Class="UI.Views.AddPackageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add Package" Height="300" Width="400">
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="Weight:"/>
+            <TextBox Text="{Binding NewPackage.Weight}" />
+
+            <TextBlock Text="Dimensions:"/>
+            <TextBox Text="{Binding NewPackage.Dimensions}" />
+
+            <TextBlock Text="Content:"/>
+            <TextBox Text="{Binding NewPackage.Content}" />
+
+            <CheckBox Content="Fragile" IsChecked="{Binding NewPackage.Fragile}"/>
+
+            <TextBlock Text="Price:"/>
+            <TextBox Text="{Binding NewPackage.Price}" />
+
+            <Button Content="Add" Command="{Binding AddPackageCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>
