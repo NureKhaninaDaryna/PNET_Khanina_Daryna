@@ -2,8 +2,8 @@
 
 public enum DeliveryStatus
 {
-    Pending,
-    InProgress,
-    Delivered,
-    Cancelled,
+    Pending = 1,
+    InProgress = 2,
+    Delivered = 3,
+    Cancelled = 4,
 }

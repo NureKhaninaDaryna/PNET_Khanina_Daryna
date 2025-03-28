@@ -2,7 +2,7 @@
 
 public enum UserRole
 {
-    Recipient,
-    Courier,
-    Sender
+    Recipient = 1,
+    Courier = 2,
+    Sender = 3
 }
