@@ -2,13 +2,17 @@
 
 public class ProfileImage : BaseEntity
 {
-    public ProfileImage(string name, string imageData)
+    public ProfileImage(string fileName, byte[] imageData)
     {
-        Name = name;
+        FileName = fileName;
         ImageData = imageData;
     }
 
-    public string Name { get; private set; }
+    public string FileName { get; private set; }
     
-    public string ImageData { get; private set; }
+    public byte[] ImageData { get; private set; }
+
+    public int UserId { get; set; }
+
+    public virtual User User { get; set; }
 }

@@ -27,6 +27,7 @@ CREATE TABLE Users (
 
 CREATE TABLE DeliveryInfo (
     Id INT IDENTITY(1,1) PRIMARY KEY,
+    TrackingNumber NVARCHAR(50) NOT NULL,
     CourierId INT NOT NULL,
     RecipientId INT NOT NULL,
     DeliveryAddress NVARCHAR(255) NOT NULL,

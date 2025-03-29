@@ -33,15 +33,13 @@ public class ProfileImageService : IProfileImageService
         
         try
         {
-            var profileImage = new ProfileImage("userAvatar", targetFileResult.Value);
+            //var profileImage = new ProfileImage("userAvatar", targetFileResult.Value);
 
-            await _profileImageRepository.CreateAsync(profileImage);
+            //await _profileImageRepository.CreateAsync(profileImage);
 
-            var updateAvatarResult = await _userService.UpdateUserAvatar(profileImage, userId);
-
-            return !updateAvatarResult.IsSuccess ? 
-                ServiceResult<Uri>.Failure(updateAvatarResult.Error) : 
-                ServiceResult<Uri>.Success(new Uri(targetFileResult.Value, UriKind.Absolute));
+           // var updateAvatarResult = await _userService.UpdateUserAvatar(profileImage, userId);
+           
+           return  ServiceResult<Uri>.Success(new Uri(targetFileResult.Value, UriKind.Absolute));
         }
         catch 
         {

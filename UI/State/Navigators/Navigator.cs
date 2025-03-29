@@ -70,8 +70,8 @@ public class Navigator : ObservableObject, INavigator
             
         bitmap.BeginInit();
             
-        bitmap.UriSource = new Uri(Authenticator.CurrentUser.Avatar!.ImageData, UriKind.Absolute);
-        CurrentAvatarPath = Authenticator.CurrentUser.Avatar!.ImageData;
+        //bitmap.UriSource = new Uri(Authenticator.CurrentUser.Avatar!.ImageData, UriKind.Absolute);
+        //CurrentAvatarPath = Authenticator.CurrentUser.Avatar!.ImageData;
             
         bitmap.EndInit();
             

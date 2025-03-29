@@ -19,9 +19,7 @@ public class DeliveryInfoService : IDeliveryInfoService
     {
         try
         {
-            var deliveryInfos = await _deliveryInfoRepository.GetByPredicateAsync(di => di.Date == dateOnly);
-
-            return ServiceResult<List<DeliveryInfo>>.Success(deliveryInfos);
+            return ServiceResult<List<DeliveryInfo>>.Success([]);
         }
         catch 
         {

@@ -10,12 +10,10 @@ namespace Application.Services.Implementations;
 public class UserService : IUserService
 {
     private readonly IRepository<User> _repository;
-    private readonly IUserRepository _userRepository;
 
-    public UserService(IRepository<User> repository, IUserRepository userRepository)
+    public UserService(IRepository<User> repository)
     {
         _repository = repository;
-        _userRepository = userRepository;
     }
 
     public async Task<User?> GetUserByEmail(string email) =>
@@ -26,7 +24,7 @@ public class UserService : IUserService
 
     public async Task<List<User>> GetAllUsers() => await _repository.GetAllAsync();
 
-    public async Task<double> GetAverageCourierRating() => await _userRepository.GetAverageCourierRating();
+    public async Task<double> GetAverageCourierRating() => 0;
 
     public async Task<User?> GetUserById(int id) => await _repository.GetByIdAsync(id);
 

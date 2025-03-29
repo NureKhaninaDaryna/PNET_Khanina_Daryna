@@ -22,24 +22,31 @@ public class SignInService : ISignInService
         _jwtService = jwtService;
     }
     
-    public async Task<ServiceResult<User>> Authenticate(string email, string password)
+    public async Task<ServiceResult<AuthUserDto>> Authenticate(string email, string password)
     {
         var user = await _userService.GetUserByEmail(email);
 
         if (user == null)
         {
-            return ServiceResult<User>.Failure(ServiceErrors.FailedAuthenticateByEmail);
+            return ServiceResult<AuthUserDto>.Failure(ServiceErrors.FailedAuthenticateByEmail);
         }
 
         var verifyPasswordResult = _passwordHashing.VerifyPassword(password, user.PasswordHash);
 
         if (!verifyPasswordResult)
         {
-            return ServiceResult<User>.Failure(ServiceErrors.FailedAuthenticateByPassword);
+            return ServiceResult<AuthUserDto>.Failure(ServiceErrors.FailedAuthenticateByPassword);
         }
         
         var token = _jwtService.GenerateJwtToken(user);
 
-        return ServiceResult<User>.Success(user);
+        return ServiceResult<AuthUserDto>.Success(new AuthUserDto { User = user, Token = token });
     }
+}
+
+public class AuthUserDto
+{
+    public User User { get; set; } = null!;
+
+    public string Token { get; set; } = null!;
 }

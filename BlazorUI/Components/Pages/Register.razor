@@ -1,0 +1,45 @@
+﻿@page "/register"
+@using Application.Services.Interfaces
+@inject IRegistrationService RegistrationService
+
+<h2 class="ui header">Register</h2>
+<div class="ui form">
+    <div class="field">
+        <label>Email</label>
+        <input @bind="email" type="email" />
+    </div>
+    <div class="field">
+        <label>Password</label>
+        <input @bind="password" type="password" />
+    </div>
+    <div class="field">
+        <label>Confirm Password</label>
+        <input @bind="confirmPassword" type="password" />
+    </div>
+    <button class="ui button primary" @onclick="RegisterUser">Register</button>
+    <div class="ui message red" style="@(string.IsNullOrEmpty(errorMessage) ? "display:none" : "display:block")">
+        @errorMessage
+    </div>
+</div>
+
+@code {
+    private string email = "";
+    private string password = "";
+    private string confirmPassword = "";
+    private string errorMessage = "";
+
+    private async Task RegisterUser()
+    {
+        if (password != confirmPassword)
+        {
+            errorMessage = "Passwords do not match.";
+            return;
+        }
+
+        var result = await RegistrationService.Register(email, password, null, null, null, null, null);
+        if (!result.IsSuccess) 
+        {
+            errorMessage = result.Error.Message;
+        }
+    }
+}

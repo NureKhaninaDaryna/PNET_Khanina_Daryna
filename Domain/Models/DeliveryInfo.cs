@@ -6,42 +6,21 @@ namespace Domain.Models;
 
 public class DeliveryInfo : BaseEntity
 {
-    public DeliveryInfo() { }
-
-    public DeliveryInfo(DateOnly date)
-    {
-        Date = date;
-    }
+    public string TrackingNumber { get; set; } = null!;
     
-    public DeliveryInfo(User user, User courier, string trackingNumber)
-    {
-        RecipientId = user.Id;
-        CourierId = courier.Id;
-        Recipient = user;
-        Courier = courier;
-        TrackingNumber = trackingNumber;
-    }
-    
-    public string TrackingNumber { get; set; }
-    
-    public DateOnly Date { get; init; }
-
     public int CourierId { get; set; }
-    
-    public User Courier { get; init; }
-    
-    public int SenderId { get; set; }
-    
-    public User Sender { get; init; }
     
     public int RecipientId  { get; set; }
     
-    public User Recipient { get; init; }
+    public string StartAddress { get; set; } = null!;
     
-    [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-    public IDictionary<DeliveryStatus, DateTime> DateStatus { get; set; } 
+    public string DeliveryAddress { get; set; } = null!;
     
-    public string StartAddress { get; set; }
+    public virtual User Recipient { get; init; } = null!;
+
+    public virtual User Courier { get; init; } = null!;
+
+    public virtual IEnumerable<DeliveryStatusHistory> DeliveryStatusHistories { get; set; } = new List<DeliveryStatusHistory>();
     
-    public string DeliveryAddress { get; set; }
+    public virtual IEnumerable<Package> Packages { get; set; } = new List<Package>();
 }

@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using Application.Services.Interfaces;
 using Domain.Models;
-using Infrastructure.Migrations;
 using UI.Commands;
 using UI.State.Authenticators;
 using UI.State.Navigators;

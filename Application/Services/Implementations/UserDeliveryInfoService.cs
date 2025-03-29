@@ -69,19 +69,12 @@ public class UserDeliveryInfoService : IUserDeliveryInfoService
         var userDeliveryInfo = new DeliveryInfo
         {
             TrackingNumber = trackingNumber,
-            Date = DateOnly.FromDateTime(DateTime.Now),
             DeliveryAddress = deliveryAddress,
             StartAddress = startAddress,
             RecipientId = recipient.Id,
             CourierId = courier.Id,
             Recipient = recipient,
-            Courier = courier,
-            SenderId = currentUser.Id,
-            Sender = currentUser,
-            DateStatus = new Dictionary<DeliveryStatus, DateTime>
-            {
-                { DeliveryStatus.Pending, DateTime.Now }
-            }
+            Courier = courier
         };
         
         try

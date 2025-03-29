@@ -42,7 +42,7 @@ public class Authenticator : ObservableObject, IAuthenticator
 
         if (!result.IsSuccess) return (result.IsSuccess, result.Error.Message);
         
-        CurrentUser = result.Value;
+        CurrentUser = result.Value.User;
 
         return (result.IsSuccess, null);
     }

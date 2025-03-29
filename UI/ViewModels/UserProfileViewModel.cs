@@ -86,8 +86,8 @@ public class UserProfileViewModel : ViewModelBase
             
         bitmap.BeginInit();
             
-        bitmap.UriSource = new Uri(Authenticator.CurrentUser.Avatar!.ImageData, UriKind.Absolute);
-        CurrentAvatarPath = Authenticator.CurrentUser.Avatar!.ImageData;
+       // bitmap.UriSource = new Uri(Authenticator.CurrentUser.Avatar!.ImageData, UriKind.Absolute);
+        // = Authenticator.CurrentUser.Avatar!.ImageData;
             
         bitmap.EndInit();
             
