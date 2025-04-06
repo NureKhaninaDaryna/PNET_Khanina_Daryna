@@ -152,7 +152,7 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AvatarId")
+                    b.Property<int?>("AvatarId")
                         .HasColumnType("int");
 
                     b.Property<DateOnly?>("DayOfBirth")
@@ -191,7 +191,8 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AvatarId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[AvatarId] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -242,8 +243,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.ProfileImage", "Avatar")
                         .WithOne("User")
                         .HasForeignKey("Domain.Models.User", "AvatarId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Avatar");
                 });

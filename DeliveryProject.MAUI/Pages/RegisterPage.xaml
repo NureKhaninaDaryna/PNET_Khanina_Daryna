@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:DeliveryProject.MAUI.ViewModels"
+             x:Class="DeliveryProject.MAUI.Pages.RegisterPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <Label Text="{Binding FeedbackMessage}"
+                   TextColor="Red"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,10,0,0"/>
+
+            
+            <Label Text="Register" FontSize="24" HorizontalOptions="Center"/>
+
+            <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email"/>
+            <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
+            <Picker Title="Select Role" ItemsSource="{Binding UserRoles}" SelectedItem="{Binding Role}" />
+            <Entry Placeholder="Username" Text="{Binding Username}" />
+            <Entry Placeholder="First Name" Text="{Binding FirstName}" />
+            <Entry Placeholder="Last Name" Text="{Binding LastName}" />
+            <Entry Placeholder="Phone Number" Keyboard="Telephone" Text="{Binding PhoneNumber}" />
+            <DatePicker Date="{Binding DayOfBirth}" />
+
+            <Button Text="Register" Command="{Binding RegisterCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

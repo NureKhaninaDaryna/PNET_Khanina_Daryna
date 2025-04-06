@@ -39,7 +39,7 @@ public class User : BaseEntity
     
     public double Rating { get; set; }
 
-    public int  AvatarId { get; set; }
+    public int? AvatarId { get; set; }
     
     public virtual ProfileImage? Avatar { get; set; }
 

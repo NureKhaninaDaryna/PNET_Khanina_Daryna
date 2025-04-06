@@ -1,45 +1,123 @@
 ﻿@page "/register"
+@rendermode InteractiveServer
 @using Application.Services.Interfaces
+@using Domain.Enums
+@using System.ComponentModel.DataAnnotations
 @inject IRegistrationService RegistrationService
+@inject NavigationManager NavigationManager
 
-<h2 class="ui header">Register</h2>
-<div class="ui form">
-    <div class="field">
-        <label>Email</label>
-        <input @bind="email" type="email" />
-    </div>
-    <div class="field">
-        <label>Password</label>
-        <input @bind="password" type="password" />
-    </div>
-    <div class="field">
-        <label>Confirm Password</label>
-        <input @bind="confirmPassword" type="password" />
-    </div>
-    <button class="ui button primary" @onclick="RegisterUser">Register</button>
-    <div class="ui message red" style="@(string.IsNullOrEmpty(errorMessage) ? "display:none" : "display:block")">
-        @errorMessage
+<h2 class="text-center mt-4">Register</h2>
+<div class="container d-flex justify-content-center">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+        <div class="card-body">
+            <EditForm Model="registrationModel" OnValidSubmit="RegisterUser">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="alert alert-danger" />
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input @bind="registrationModel.Email" type="email" class="form-control" placeholder="Enter your email" />
+                    <ValidationMessage For="@(() => registrationModel.Email)" class="text-danger" />
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input @bind="registrationModel.Password" type="password" class="form-control" placeholder="Enter password" />
+                    <ValidationMessage For="@(() => registrationModel.Password)" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Confirm Password</label>
+                    <input @bind="registrationModel.ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" />
+                    <ValidationMessage For="@(() => registrationModel.ConfirmPassword)" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input @bind="registrationModel.UserName" type="text" class="form-control" placeholder="Enter your username" />
+                    <ValidationMessage For="@(() => registrationModel.UserName)" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">First Name</label>
+                    <input @bind="registrationModel.FirstName" type="text" class="form-control" placeholder="Enter your first name" />
+                    <ValidationMessage For="@(() => registrationModel.FirstName)" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Last Name</label>
+                    <input @bind="registrationModel.LastName" type="text" class="form-control" placeholder="Enter your last name" />
+                    <ValidationMessage For="@(() => registrationModel.LastName)" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <input @bind="registrationModel.PhoneNumber" type="tel" class="form-control" placeholder="Enter your phone number" />
+                    <ValidationMessage For="@(() => registrationModel.PhoneNumber)" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Date of Birth</label>
+                    <input @bind="registrationModel.DayOfBirth" type="date" class="form-control" />
+                    <ValidationMessage For="@(() => registrationModel.DayOfBirth)" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Role</label>
+                    <select @bind="registrationModel.Role" class="form-select">
+                        <option value="Recipient">Recipient</option>
+                        <option value="Courier">Courier</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </EditForm>
+        </div>
     </div>
 </div>
 
 @code {
-    private string email = "";
-    private string password = "";
-    private string confirmPassword = "";
-    private string errorMessage = "";
+    private RegistrationModel registrationModel = new();
 
     private async Task RegisterUser()
     {
-        if (password != confirmPassword)
+        var result = await RegistrationService.Register(
+            registrationModel.Email, registrationModel.Password, registrationModel.UserName,
+            registrationModel.FirstName, registrationModel.LastName, registrationModel.PhoneNumber,
+            registrationModel.DayOfBirth, registrationModel.Role
+        );
+
+        if (!result.IsSuccess) 
         {
-            errorMessage = "Passwords do not match.";
             return;
         }
 
-        var result = await RegistrationService.Register(email, password, null, null, null, null, null);
-        if (!result.IsSuccess) 
-        {
-            errorMessage = result.Error.Message;
-        }
+        NavigationManager.NavigateTo("login");
+    }
+
+    public class RegistrationModel
+    {
+
+        public string Email { get; set; } = "";
+
+
+        public string Password { get; set; } = "";
+
+
+        public string ConfirmPassword { get; set; } = "";
+
+        public string UserName { get; set; } = "";
+
+        public string FirstName { get; set; } = "";
+
+        public string LastName { get; set; } = "";
+
+
+        public string PhoneNumber { get; set; } = "";
+
+        public DateOnly? DayOfBirth { get; set; }
+
+        public UserRole Role { get; set; } = UserRole.Recipient;
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{8A447980-6AFF-4825-8C64-2A13E4FA31D2}"
 EndProject
@@ -12,15 +12,19 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6ED726FE-143B-4EF2-81A7-5B433FB402CF}"
 	ProjectSection(SolutionItems) = preProject
 		CreateDbAndTables.sql = CreateDbAndTables.sql
-		ProcedureAssignCourierToDelivery.sql = ProcedureAssignCourierToDelivery.sql
-		InitData.sql = InitData.sql
-		FunctionGetUserFullName.sql = FunctionGetUserFullName.sql
-		FunctionGetDeliveriesByCourier.sql = FunctionGetDeliveriesByCourier.sql
-		Triggers.sql = Triggers.sql
 		Cursor.sql = Cursor.sql
+		FunctionGetDeliveriesByCourier.sql = FunctionGetDeliveriesByCourier.sql
+		FunctionGetUserFullName.sql = FunctionGetUserFullName.sql
+		InitData.sql = InitData.sql
+		ProcedureAssignCourierToDelivery.sql = ProcedureAssignCourierToDelivery.sql
+		Triggers.sql = Triggers.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorUI", "BlazorUI\BlazorUI.csproj", "{84005D60-3224-4B4F-8770-732D85E3166A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeliveryProject.MAUI", "DeliveryProject.MAUI\DeliveryProject.MAUI.csproj", "{16897E86-EA1E-4118-A66E-DB3C00C2363D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{5B286F5E-1DA4-C61D-7861-80C46E44F0B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,9 +48,21 @@ Global
 		{84005D60-3224-4B4F-8770-732D85E3166A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84005D60-3224-4B4F-8770-732D85E3166A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84005D60-3224-4B4F-8770-732D85E3166A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16897E86-EA1E-4118-A66E-DB3C00C2363D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16897E86-EA1E-4118-A66E-DB3C00C2363D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16897E86-EA1E-4118-A66E-DB3C00C2363D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{16897E86-EA1E-4118-A66E-DB3C00C2363D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16897E86-EA1E-4118-A66E-DB3C00C2363D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B286F5E-1DA4-C61D-7861-80C46E44F0B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B286F5E-1DA4-C61D-7861-80C46E44F0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B286F5E-1DA4-C61D-7861-80C46E44F0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B286F5E-1DA4-C61D-7861-80C46E44F0B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5B286F5E-1DA4-C61D-7861-80C46E44F0B3} = {6ED726FE-143B-4EF2-81A7-5B433FB402CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6F1D2A9D-0015-4198-BB76-6E680FF5D2E9}

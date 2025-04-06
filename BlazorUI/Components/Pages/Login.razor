@@ -1,0 +1,73 @@
+﻿@page "/login"
+@rendermode InteractiveServer
+@using System.ComponentModel.DataAnnotations
+@using Application.Services.Interfaces
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ISignInService SignInService
+@inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage SessionStorage
+@inject HttpClient Http
+@inject ILocalStorageService LocalStorage
+@inject IConfiguration Configuration
+
+<h2 class="text-center mt-4">Login</h2>
+<div class="container d-flex justify-content-center">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+        <div class="card-body">
+            <EditForm Model="loginModel" OnValidSubmit="LoginUser" FormName="LoginForm">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="alert alert-danger" />
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input @bind="loginModel.Email" type="email" class="form-control" placeholder="Enter your email" />
+                    <ValidationMessage For="@(() => loginModel.Email)" class="text-danger" />
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input @bind="loginModel.Password" type="password" class="form-control" placeholder="Enter password" />
+                    <ValidationMessage For="@(() => loginModel.Password)" class="text-danger" />
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </EditForm>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger mt-3 text-center">@errorMessage</div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginModel loginModel = new();
+    private string errorMessage = "";
+
+    private async Task LoginUser()
+    {
+        var result = await SignInService.Authenticate(loginModel.Email, loginModel.Password);
+
+        if (!result.IsSuccess)
+        {
+            errorMessage = result.Error.Message;
+            return;
+        }
+        
+        await LocalStorage.SetItemAsync("token", result.Value.Token);
+        NavigationManager.NavigateTo("/");
+    }
+
+    public class LoginModel
+    {
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "Password is required.")]
+        public string Password { get; set; } = "";
+    }
+}
