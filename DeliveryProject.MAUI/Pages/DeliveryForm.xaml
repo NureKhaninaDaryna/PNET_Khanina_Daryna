@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeliveryProject.MAUI.Pages.DeliveryForm">
+    <Grid Padding="20">
+        <!-- Delivery Form -->
+        <ScrollView IsVisible="{Binding Authenticator.IsLoggedIn}">
+            <VerticalStackLayout Spacing="20">
+
+                <Label Text="Send the delivery info for courier" FontSize="20" FontAttributes="Bold" />
+
+                <!-- Recipient -->
+                <Label Text="Recipient" />
+                <Picker ItemsSource="{Binding RecipientEmails}"
+                        SelectedItem="{Binding SelectedRecipientEmail}" />
+
+                <!-- Courier -->
+                <Label Text="Courier" />
+                <Picker ItemsSource="{Binding CourierEmails}"
+                        SelectedItem="{Binding SelectedCourierEmail}" />
+
+                <!-- Start Address -->
+                <Label Text="Start Address" />
+                <Entry Text="{Binding StartAddress}" />
+
+                <!-- Delivery Address -->
+                <Label Text="Delivery Address" />
+                <Entry Text="{Binding DeliveryAddress}" />
+
+                <!-- Tracking Numbers -->
+                <Label Text="Existing Tracking Numbers" />
+                <Editor Text="{Binding AllTrackingNumbersText}" 
+                        IsReadOnly="True" 
+                        AutoSize="TextChanges"
+                        HeightRequest="100" />
+
+                <!-- Packages -->
+                <HorizontalStackLayout>
+                    <Label Text="Packages:" />
+                    <Label Text="{Binding PackagesCount}" FontAttributes="Bold" />
+                    <Button Text="+"
+                            Command="{Binding OpenAddPackageWindowCommand}" />
+                </HorizontalStackLayout>
+
+                <!-- Submit -->
+                <Button Text="Create"
+                        Command="{Binding AddUserDeliveryInfoCommand}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

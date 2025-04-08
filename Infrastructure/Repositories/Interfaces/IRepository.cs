@@ -14,6 +14,8 @@ public interface IRepository<T> where T : BaseEntity
     public Task<List<T>> GetAllAsync();
 
     public Task CreateAsync(T item);
+    
+    Task<int> CreateAndReturnIdAsync(T item);
 
     public Task RemoveByIdAsync(int id);
     

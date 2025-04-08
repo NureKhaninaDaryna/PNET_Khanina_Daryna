@@ -14,17 +14,20 @@ public class UserDeliveryInfoService : IUserDeliveryInfoService
     private readonly IRepository<DeliveryInfo> _userDeliveryInfoRepository;
     private readonly IRepository<User> _userRepository;
     private readonly IRepository<Package> _packageRepository;
+    private readonly IRepository<DeliveryStatusHistory> _deliveryStatusHistoryRepository;
 
     private const int TrackingNumberLength = 12;
     
     public UserDeliveryInfoService(
         IRepository<DeliveryInfo> userDeliveryInfoRepository, 
         IRepository<User> userRepository,
-        IRepository<Package> packageRepository)
+        IRepository<Package> packageRepository,
+        IRepository<DeliveryStatusHistory> deliveryStatusHistoryRepository)
     {
         _userDeliveryInfoRepository = userDeliveryInfoRepository;
         _userRepository = userRepository;
         _packageRepository = packageRepository;
+        _deliveryStatusHistoryRepository = deliveryStatusHistoryRepository;
     }
     
     public async Task<ServiceResult<DeliveryInfo>> CreateUserDeliveryInfo(
@@ -79,21 +82,28 @@ public class UserDeliveryInfoService : IUserDeliveryInfoService
         
         try
         {
-            await _userDeliveryInfoRepository.CreateAsync(userDeliveryInfo);
+            var id = await _userDeliveryInfoRepository.CreateAndReturnIdAsync(userDeliveryInfo);
 
-            foreach (var package in packages)
+            var deliveryInfoStatus = new DeliveryStatusHistory()
             {
-                var packageToCreate = new Package
-                {
-                    DeliveryInfoId = await _userDeliveryInfoRepository.GetLastIdAsync(),
-                    DeliveryInfo = userDeliveryInfo,
-                    Weight = package.Weight,
-                    Dimensions = package.Dimensions,
-                    Content = package.Content,
-                    Fragile = package.Fragile,
-                    Price = package.Price,
-                };
-                
+                DeliveryInfoId = id,
+                Status = DeliveryStatus.InProgress,
+                ChangeDate = DateTime.Now,
+                AddressInProgress = startAddress
+            };
+
+            await _deliveryStatusHistoryRepository.CreateAsync(deliveryInfoStatus);
+
+            foreach (var packageToCreate in packages.Select(package => new Package
+                     {
+                         DeliveryInfo = userDeliveryInfo,
+                         Weight = package.Weight,
+                         Dimensions = package.Dimensions,
+                         Content = package.Content,
+                         Fragile = package.Fragile,
+                         Price = package.Price,
+                     }))
+            {
                 await _packageRepository.CreateAsync(packageToCreate);
             }
             

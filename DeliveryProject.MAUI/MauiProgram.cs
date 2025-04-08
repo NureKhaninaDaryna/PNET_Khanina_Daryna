@@ -8,23 +8,20 @@ using Infrastructure.Repositories;
 using Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 
 namespace DeliveryProject.MAUI;
-
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        
         builder.Services.AddScoped<DbContext, AppDbContext>();
-        
         builder.Services.AddDbContext<AppDbContext>(options =>
         {
             options.UseSqlServer("data source=192.168.1.3,1433;Database=DeliverySqlDb;User Id=MauiUser;Password=darhan1168;TrustServerCertificate=true;");
             options.UseLazyLoadingProxies();
         });
-        
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         builder.Services.AddSingleton<IPasswordHashing, PasswordHashing>();
         builder.Services.AddScoped<IUserService, UserService>();
@@ -35,26 +32,24 @@ public static class MauiProgram
         builder.Services.AddScoped<IUserDeliveryInfoService, UserDeliveryInfoService>();
         builder.Services.AddScoped<IFileAddingService, FileAddingService>();
         builder.Services.AddScoped<IProfileImageService, ProfileImageService>();
-        
         builder.Services.AddSingleton<IAuthenticator, Authenticator>();
-        
         builder.Services.AddTransient<RegisterViewModel>();
         builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<DeliveryFormViewModel>();
+        builder.Services.AddTransient<AddPackageViewModel>();
         builder.Services.AddTransient<RegisterPage>();
         builder.Services.AddTransient<LoginPage>();
-
-        builder
-            .UseMauiApp<App>()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
-
+        builder.Services.AddTransient<DeliveryForm>();
+        builder.Services.AddTransient<AddPackagePage>();
+        
+        builder.UseMauiApp<App>().ConfigureFonts(fonts =>
+        {
+            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+        }).UseMauiCommunityToolkit();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
-
         return builder.Build();
     }
 }

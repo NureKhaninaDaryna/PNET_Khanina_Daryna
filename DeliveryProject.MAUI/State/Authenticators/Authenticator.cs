@@ -39,7 +39,7 @@ public class Authenticator : ObservableObject, IAuthenticator
         var result = await _signInService.Authenticate(email, password);
 
         if (!result.IsSuccess) return (result.IsSuccess, result.Error.Message);
-        
+
         CurrentUser = result.Value.User;
         
         return (result.IsSuccess, null);

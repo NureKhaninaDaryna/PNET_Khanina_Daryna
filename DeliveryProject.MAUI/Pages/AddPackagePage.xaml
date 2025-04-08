@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="DeliveryProject.MAUI.Pages.AddPackagePage"
+               xmlns:viewmodels="clr-namespace:DeliveryProject.MAUI.ViewModels"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               Size="400, 500"
+               CanBeDismissedByTappingOutsideOfPopup="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <Label Text="Weight:" />
+            <Entry Text="{Binding Package.Weight}" Keyboard="Numeric"/>
+
+            <Label Text="Dimensions:" />
+            <Entry Text="{Binding Package.Dimensions}" />
+
+            <Label Text="Content:" />
+            <Entry Text="{Binding Package.Content}" />
+
+            <CheckBox IsChecked="{Binding Package.Fragile}" />
+            <Label Text="Fragile" />
+
+            <Label Text="Price:" />
+            <Entry Text="{Binding Package.Price}" Keyboard="Numeric"/>
+
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Add" Command="{Binding ConfirmCommand}" />
+                <Button Text="Cancel" Command="{Binding CancelCommand}" BackgroundColor="LightGray"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</toolkit:Popup>

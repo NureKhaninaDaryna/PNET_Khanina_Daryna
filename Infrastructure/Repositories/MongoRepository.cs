@@ -63,4 +63,9 @@ public class MongoRepository<T> : IRepository<T> where T : BaseEntity
 
         return lastDocument?.Id ?? 0;
     }
+
+    public Task<int> CreateAndReturnIdAsync(T item)
+    {
+        throw new NotImplementedException();
+    }
 }

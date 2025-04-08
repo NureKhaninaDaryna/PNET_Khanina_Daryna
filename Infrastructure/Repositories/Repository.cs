@@ -39,6 +39,14 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         await _context.SaveChangesAsync();
     }
 
+    public async Task<int> CreateAndReturnIdAsync(T item)
+    {
+       var result = await _dbSet.AddAsync(item);
+       await _context.SaveChangesAsync();
+       
+       return result.Entity.Id;
+    }
+
     public async Task UpdateAsync(T item)
     {
         _dbSet.Update(item);
