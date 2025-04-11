@@ -37,10 +37,12 @@ public static class MauiProgram
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<DeliveryFormViewModel>();
         builder.Services.AddTransient<AddPackageViewModel>();
+        builder.Services.AddTransient<UsersViewModel>();
         builder.Services.AddTransient<RegisterPage>();
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<DeliveryForm>();
         builder.Services.AddTransient<AddPackagePage>();
+        builder.Services.AddTransient<UsersPage>();
         
         builder.UseMauiApp<App>().ConfigureFonts(fonts =>
         {

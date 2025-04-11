@@ -18,7 +18,7 @@ BEGIN
     LEFT JOIN DeliveryInfo d ON u.Id = d.CourierId
     WHERE u.Role = 2
     GROUP BY u.Id
-    ORDER BY COUNT(d.Id);
+    ORDER BY COUNT(d.Id), u.Id;
 
     IF @SelectedCourierId IS NULL
     BEGIN

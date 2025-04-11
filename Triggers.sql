@@ -21,7 +21,7 @@ AS
 BEGIN
     IF EXISTS (SELECT 1 FROM inserted WHERE Price < 0)
     BEGIN
-        RAISERROR ('Price can not be less', 16, 1);
+        RAISERROR ('Price can not be less 0', 16, 1);
         ROLLBACK;
         RETURN;
     END;
@@ -38,7 +38,8 @@ SELECT * FROM DeliveryInfo;
 SELECT * FROM DeliveryStatusHistory; 
 
 INSERT INTO DeliveryStatusHistory (DeliveryInfoId, Status, ChangeDate) 
-VALUES (4, 3, GETDATE());
+VALUES (4, 3, GETDATE()),
+        (2, 4, GETDATE());
 
 SELECT CourierId FROM DeliveryInfo WHERE Id = 4;
 SELECT Id, FirstName, LastName, Rating FROM Users WHERE Id = 2;
@@ -46,7 +47,11 @@ SELECT Id, FirstName, LastName, Rating FROM Users WHERE Id = 2;
 -- Check 2
     
 INSERT INTO Packages (DeliveryInfoId, Weight, Dimensions, Content, Fragile, Price)
-VALUES (1, 2.5, '20/30', 'Books', 0, -10);
+VALUES
+    (1, 2.5, '20/30', 'Books', 0, 5),
+    (1, 2.5, '20/30', 'Books', 0, -10);
+    
+Select * from Packages;
 
 INSERT INTO Packages (DeliveryInfoId, Weight, Dimensions, Content, Fragile, Price)
 VALUES (1, 2.5, '20/30', 'Books', 0, 10);

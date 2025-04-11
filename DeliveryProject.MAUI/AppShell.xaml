@@ -16,5 +16,10 @@
         Title="Login"
         ContentTemplate="{DataTemplate pages:LoginPage}"
         Route="login" />
+    
+    <ShellContent
+        Title="Users"
+        ContentTemplate="{DataTemplate pages:UsersPage}"
+        Route="users" />
 
 </Shell>
