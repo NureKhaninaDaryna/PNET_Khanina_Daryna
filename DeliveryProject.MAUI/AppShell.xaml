@@ -21,5 +21,10 @@
         Title="Users"
         ContentTemplate="{DataTemplate pages:UsersPage}"
         Route="users" />
+    
+    <ShellContent
+        Title="Profile"
+        ContentTemplate="{DataTemplate pages:UserProfilePage}"
+        Route="profile" />
 
 </Shell>

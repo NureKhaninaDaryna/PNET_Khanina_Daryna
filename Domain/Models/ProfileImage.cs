@@ -2,7 +2,7 @@
 
 public class ProfileImage : BaseEntity
 {
-    public ProfileImage(string fileName, byte[] imageData)
+    public ProfileImage(string fileName, string imageData)
     {
         FileName = fileName;
         ImageData = imageData;
@@ -10,7 +10,7 @@ public class ProfileImage : BaseEntity
 
     public string FileName { get; private set; }
     
-    public byte[] ImageData { get; private set; }
+    public string ImageData { get; private set; }
 
     public int UserId { get; set; }
 

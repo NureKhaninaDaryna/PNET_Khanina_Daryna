@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeliveryProject.MAUI.Pages.UserProfilePage">
+    <ContentPage.Content>
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="15">
+
+                <Label Text="User Profile" FontSize="20" HorizontalOptions="Center" FontAttributes="Bold" />
+
+                <Image WidthRequest="150" HeightRequest="150" Source="{Binding AvatarSource}" HorizontalOptions="Center"/>
+                <Button Text="Upload New Avatar" Command="{Binding UploadPhotoCommand}" />
+
+                <Label Text="Email:" />
+                <Entry Text="{Binding User.Email}" />
+
+                <Label Text="Username:" />
+                <Entry Text="{Binding User.UserName}" />
+
+                <Label Text="First Name:" />
+                <Entry Text="{Binding User.FirstName}" />
+
+                <Label Text="Last Name:" />
+                <Entry Text="{Binding User.LastName}" />
+
+                <Label Text="Phone Number:" />
+                <Entry Text="{Binding User.PhoneNumber}" />
+
+                <Label Text="Day of Birth:" />
+                <DatePicker Date="{Binding User.DayOfBirth}" 
+                            MinimumDate="{Binding DateHelper.MinDateOfBirth}" 
+                            MaximumDate="{Binding DateHelper.MaxDateOfBirth}" />
+
+                <Label Text="Role:" />
+                <Entry Text="{Binding User.Role}" IsReadOnly="True" />
+
+                <Label Text="Rating:" />
+                <Label Text="{Binding User.Rating}" />
+
+                <!-- Здесь можно вставить кастомный рейтинг-контрол или звёздочки -->
+
+                <Button Text="Update" Command="{Binding UpdateUserCommand}" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
