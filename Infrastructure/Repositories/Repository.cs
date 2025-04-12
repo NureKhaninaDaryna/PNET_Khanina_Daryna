@@ -2,6 +2,7 @@
 using Domain.Models;
 using Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Infrastructure.Repositories;
  
@@ -49,6 +50,23 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
 
     public async Task UpdateAsync(T item)
     {
+        if (item is not BaseEntity entityWithId)
+            throw new InvalidOperationException("Entity must implement IEntity.");
+
+        var entry = _context.ChangeTracker.Entries<T>()
+            .FirstOrDefault(e => e.Entity is BaseEntity trackedEntity && trackedEntity.Id == entityWithId.Id);
+
+        if (entry != null)
+            entry.State = EntityState.Detached;
+
+        foreach (var navigation in _context.Entry(item).Navigations)
+        {
+            if (navigation.Metadata is INavigation nav && nav.IsCollection == false)
+            {
+                navigation.CurrentValue = null;
+            }
+        }
+
         _dbSet.Update(item);
 
         await _context.SaveChangesAsync();

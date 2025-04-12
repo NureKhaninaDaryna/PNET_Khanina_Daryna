@@ -58,13 +58,13 @@ public partial class UserProfileViewModel : ObservableObject
         }
         else
         {
-            AvatarSource = "default_avatar.png";
+            AvatarSource = ImageSource.FromFile(@"C:\\Users\\Daryna\\Desktop\\PNET_Khanina_Daryna\\DeliveryProjectSQL\\DeliveryProject.MAUI\\profile-default-icon-2048x2045-u3j7s5nj.png");
         }
     }
 
     private async Task UpdateUserAsync()
     {
-        var updated = await _userService.UpdateUser(User, User.Email);
+        await _userService.UpdateUser(User, User.Email);
     }
 
     private async Task UploadAvatarAsync()
@@ -88,8 +88,6 @@ public partial class UserProfileViewModel : ObservableObject
             }
             
             AvatarSource = ImageSource.FromFile(cachePath);
-            
-            var uploadResult = await _profileImageService.CreateImage(cachePath, User.Id);
         }
     }
 }

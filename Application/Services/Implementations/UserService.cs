@@ -43,7 +43,7 @@ public class UserService : IUserService
 
             return ServiceResult<User>.Success(updatedUser);
         }
-        catch
+        catch (Exception ex)
         {
             return ServiceResult<User>.Failure(ServiceErrors.FailedToUpdateUser);
         }
