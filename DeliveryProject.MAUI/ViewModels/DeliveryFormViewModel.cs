@@ -39,12 +39,22 @@ public partial class DeliveryFormViewModel : ObservableObject
         _userDeliveryInfoService = userDeliveryInfoService;
         Authenticator = authenticator;
 
+        if (!authenticator.IsLoggedIn)
+        {
+            _ = GoToLoginPage();
+        }
+        
         AddUserDeliveryInfoCommand = new AsyncRelayCommand(OnAddUserDeliveryInfo);
         OpenAddPackageWindowCommand = new AsyncRelayCommand(OnOpenAddPackageWindow);
 
         LoadDataAsync();
     }
 
+    private async Task GoToLoginPage()
+    {
+        await Shell.Current.GoToAsync("login");
+    }
+    
     private async void LoadDataAsync()
     {
         if (Authenticator.CurrentUser == null)

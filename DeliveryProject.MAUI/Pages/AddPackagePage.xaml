@@ -9,6 +9,12 @@
                CanBeDismissedByTappingOutsideOfPopup="False">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
+                   FontAttributes="Bold"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource NullToBoolConverter}}"
+                   HorizontalOptions="Center"/>
+            
             <Label Text="Weight:" />
             <Entry Text="{Binding Package.Weight}" Keyboard="Numeric"/>
 
@@ -18,8 +24,10 @@
             <Label Text="Content:" />
             <Entry Text="{Binding Package.Content}" />
 
-            <CheckBox IsChecked="{Binding Package.Fragile}" />
-            <Label Text="Fragile" />
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                <Label Text="Fragile:" VerticalOptions="Center"/>
+                <CheckBox IsChecked="{Binding Package.Fragile}" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
 
             <Label Text="Price:" />
             <Entry Text="{Binding Package.Price}" Keyboard="Numeric"/>

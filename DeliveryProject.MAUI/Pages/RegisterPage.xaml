@@ -6,18 +6,22 @@
              x:Class="DeliveryProject.MAUI.Pages.RegisterPage">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
+            
             <Label Text="{Binding FeedbackMessage}"
                    TextColor="Red"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
                    Margin="0,10,0,0"/>
 
-            
             <Label Text="Register" FontSize="24" HorizontalOptions="Center"/>
 
-            <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email"/>
+            <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email" />
+
             <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
+            <Entry Placeholder="Confirm Password" IsPassword="True" Text="{Binding ConfirmPassword}" />
+
             <Picker Title="Select Role" ItemsSource="{Binding UserRoles}" SelectedItem="{Binding Role}" />
+
             <Entry Placeholder="Username" Text="{Binding Username}" />
             <Entry Placeholder="First Name" Text="{Binding FirstName}" />
             <Entry Placeholder="Last Name" Text="{Binding LastName}" />

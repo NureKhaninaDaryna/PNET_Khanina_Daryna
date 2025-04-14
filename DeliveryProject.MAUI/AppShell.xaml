@@ -18,6 +18,11 @@
         Route="login" />
     
     <ShellContent
+        Title="Delivery Form"
+        ContentTemplate="{DataTemplate pages:DeliveryForm}"
+        Route="delivery" />
+    
+    <ShellContent
         Title="Users"
         ContentTemplate="{DataTemplate pages:UsersPage}"
         Route="users" />

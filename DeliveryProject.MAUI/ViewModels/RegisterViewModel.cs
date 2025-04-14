@@ -12,6 +12,7 @@ namespace DeliveryProject.MAUI.ViewModels
         
         [ObservableProperty] private string email = string.Empty;
         [ObservableProperty] private string password = string.Empty;
+        [ObservableProperty] private string confirmPassword = string.Empty;
         [ObservableProperty] private UserRole role;
         [ObservableProperty] private string? username;
         [ObservableProperty] private string? firstName;
@@ -34,6 +35,21 @@ namespace DeliveryProject.MAUI.ViewModels
 
         private async Task OnRegister()
         {
+            if (string.IsNullOrWhiteSpace(Email) ||
+                string.IsNullOrWhiteSpace(Password) ||
+                string.IsNullOrWhiteSpace(ConfirmPassword) ||
+                string.IsNullOrWhiteSpace(Username))
+            {
+                FeedbackMessage = "Please fill in all required fields.";
+                return;
+            }
+
+            if (Password != ConfirmPassword)
+            {
+                FeedbackMessage = "Passwords do not match.";
+                return;
+            }
+            
             var result = await _authenticator.Register(Email, Password, Username, FirstName, LastName, PhoneNumber, DayOfBirth, Role);
             if (result.IsSuccess)
             {

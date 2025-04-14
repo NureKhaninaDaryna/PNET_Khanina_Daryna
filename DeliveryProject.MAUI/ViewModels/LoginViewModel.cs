@@ -31,10 +31,5 @@ public partial class LoginViewModel : ObservableObject
         var result = await _authenticator.SignIn(Username, Password);
 
         FeedbackMessage = !result.Item1 ? result.Item2! : "You successfully logged in!";
-
-        if (result is { Item1: true })
-        {
-            await Shell.Current.GoToAsync("delivery");
-        }
     }
 }

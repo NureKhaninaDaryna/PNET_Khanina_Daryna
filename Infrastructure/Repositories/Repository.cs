@@ -25,8 +25,6 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
 
     public async Task<List<T>> GetByPredicateAsync(Expression<Func<T, bool>> predicate)
     {
-        var result = await _dbSet.Where(predicate).ToListAsync();
-        
         return await _dbSet
             .Where(predicate)
             .ToListAsync();
@@ -51,7 +49,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
     public async Task UpdateAsync(T item)
     {
         if (item is not BaseEntity entityWithId)
-            throw new InvalidOperationException("Entity must implement IEntity.");
+            throw new InvalidOperationException("Entity must implement BaseEntity.");
 
         var entry = _context.ChangeTracker.Entries<T>()
             .FirstOrDefault(e => e.Entity is BaseEntity trackedEntity && trackedEntity.Id == entityWithId.Id);
