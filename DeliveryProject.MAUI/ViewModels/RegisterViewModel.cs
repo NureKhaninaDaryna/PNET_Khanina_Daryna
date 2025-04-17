@@ -10,6 +10,9 @@ namespace DeliveryProject.MAUI.ViewModels
     {
         private readonly IRegistrationService _authenticator;
         
+        public DateTime MinimumBirthDate => DateTime.Today.AddYears(-65);
+        public DateTime MaximumBirthDate => DateTime.Today.AddYears(-18);
+        
         [ObservableProperty] private string email = string.Empty;
         [ObservableProperty] private string password = string.Empty;
         [ObservableProperty] private string confirmPassword = string.Empty;
